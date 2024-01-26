@@ -1,40 +1,62 @@
-import altair as alt
-import numpy as np
-import pandas as pd
 import streamlit as st
 
-"""
-# Welcome to Streamlit!
+# Title
+st.title("My Streamlit App")
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+# Header
+st.header("Welcome to my app!")
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+# Text
+st.text("This is some text.")
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+# Markdown
+st.markdown("### This is a markdown title")
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+# Button
+button_clicked = st.button("Click me!")
+if button_clicked:
+    st.write("Button clicked!")
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
+# Checkbox
+checkbox_state = st.checkbox("Check me!")
+if checkbox_state:
+    st.write("Checkbox checked!")
 
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
+# Slider
+slider_value = st.slider("Slide me", 0, 100, 50)
+st.write("Slider value:", slider_value)
 
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-        x=alt.X("x", axis=None),
-        y=alt.Y("y", axis=None),
-        color=alt.Color("idx", legend=None, scale=alt.Scale()),
-        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-    ))
+# Selectbox
+option = st.selectbox("Select an option", ["Option 1", "Option 2", "Option 3"])
+st.write("Selected option:", option)
+
+# File uploader
+uploaded_file = st.file_uploader("Upload a file")
+if uploaded_file is not None:
+    st.write("File uploaded!")
+
+# Plotting
+st.subheader("Data Visualization")
+data = [1, 2, 3, 4, 5]
+st.line_chart(data)
+
+# Displaying images
+st.subheader("Image")
+image_url = "https://example.com/image.jpg"
+st.image(image_url, caption="Example Image", use_column_width=True)
+
+# Dataframe
+st.subheader("Dataframe")
+import pandas as pd
+data = {"Name": ["John", "Jane", "Alice"], "Age": [25, 30, 35]}
+df = pd.DataFrame(data)
+st.dataframe(df)
+
+# Display raw code
+st.subheader("Code")
+code = '''
+def hello():
+    print("Hello, Streamlit!")
+hello()
+'''
+st.code(code, language="python")
